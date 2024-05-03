@@ -1,7 +1,7 @@
 
 let date = new Date().toLocaleDateString();
 let conteoId;
-let clientes = 1;
+let clientes = 0;
 let ventas = 0;
 let totalVentas = 0;
 
