@@ -18,7 +18,8 @@ h2 {
 }
 
 #itemsClientes{
-    padding-left: 30%;
+    padding-left: 20%;
+    padding-top: 2%;
 }
 
 #botones{
@@ -62,7 +63,7 @@ h2 {
     padding-right: 15%;
     text-align: left;
     font-size: 20px;
-    width: 350px;
+    width: 300px;
 }
 
 #buscar{
@@ -124,4 +125,21 @@ h2 {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+#clienteRow{
+    border: 1px solid gray;
+    font-size: large;
+}
+
+#btnAgregarCompra{
+    background-color: #4CAF50;
+}
+
+#btnEliminarCompra{
+    background-color: #af4c4c;
+}
+
+#btnMostrarCompra{
+    background-color: #4c66af;
 }

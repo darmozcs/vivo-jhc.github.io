@@ -5,6 +5,7 @@ let clientes = 0;
 let ventas = 0;
 let totalVentas = 0;
 
+let separador = "                 ";
 let textTitulo = "VIVO FECHA: "
 let hr = 0;
 let seg = 0;
@@ -28,12 +29,7 @@ function finalizar(){
     hr = 0;
     seg = 0;
     min = 0;
-    let hora = String(hr).padStart(2, "0");
-    let minutos = String(min).padStart(2, "0");
-    let segundos = String(seg).padStart(2, "0");
-
-    let textoHora = hora + ":" + minutos + ":" + segundos;
-    document.getElementById("reloj").textContent = textoHora;
+    setearReloj(hr, min, seg)
 }
 
 function ticTac(){
@@ -48,6 +44,10 @@ function ticTac(){
     } else {
         seg = seg + 1;
     }
+    setearReloj(hr, min, seg)
+}
+
+function setearReloj(hr, min, seg){
     let hora = String(hr).padStart(2, "0");
     let minutos = String(min).padStart(2, "0");
     let segundos = String(seg).padStart(2, "0");
@@ -57,25 +57,73 @@ function ticTac(){
 }
 
 function actualizarTotales(){
-    document.getElementById("ventas").textContent += ventas + " $";
-    document.getElementById("totalVentas").textContent += totalVentas + " $";
-    document.getElementById("totalclientes").textContent += clientes;
+    document.getElementById("ventas").textContent ="Ventas: "+ ventas + " $";
+    document.getElementById("totalVentas").textContent ="Total: "+ totalVentas + " $";
+    document.getElementById("totalclientes").textContent ="Clientes: "+ clientes;
 }
 
 function crearCliente() {
-    //encontrar contenedor por su id
-    let elementoContenedor = document.getElementById(contenedorID);
+    let compras = 0;
+    let total = 0;
+    let contenedorCliente = document.getElementById("itemsClientes");
+    let inputNombre = document.getElementById("nombre").value;
+    let inputCuenta = document.getElementById("cuenta").value;
+    let inputtelefono = document.getElementById("telefono").value;
 
-    //loop para crear tantas tiendas como se pidan
-    for(let conteoTiendas=1; conteoTiendas<=cantidadTiendas; conteoTiendas++) {
+    //validacion de los input
+    let resultado = validarContenido(inputNombre);
+    if(resultado){
+    clientes += 1;
+    //elementos que componen al cliente
+    let elementoCliente = document.createElement("div");
+    let elementoEncabezado = document.createElement("button");
+    let elementoLabel = document.createElement("label");
+    let elementoInput = document.createElement("input");
 
-        //crear el texto de label para poder llamar a la funcion
-        let textoEtiqueta = "Tienda " + conteoTiendas;
+    //botones de eliminar y crear compras
+    let agregarCompra = document.createElement("button");
+    let eliminarCompra = document.createElement("button");
+    let mostrarCompra = document.createElement("button");
+    agregarCompra.textContent = "+";
+    eliminarCompra.textContent = "-";
+    mostrarCompra.textContent = "\/";
+    agregarCompra.setAttribute("id", "btnAgregarCompra");
+    eliminarCompra.setAttribute("id", "btnEliminarCompra");
+    mostrarCompra.setAttribute("id", "btnMostrarCompra");
+    //texto y checkbox del cliente
+    let totales = separador + " - Compras: " + compras + " - Total: " + total + " ";  
+    elementoLabel.textContent = " Nombre: " + inputNombre +" - Cuenta: "+ inputCuenta +" - Telefono: "+ inputtelefono + totales;
+    elementoLabel.setAttribute("id", inputNombre);
+    elementoInput.setAttribute("type", "checkbox");
+    elementoInput.setAttribute("id", inputNombre);
 
-        //crear tiendas con crearParrafoTienda
-        let parrafoTienda = crearParrafotienda(textoEtiqueta, min);
-
-        //agregar el parrafo al contenedor
-        elementoContenedor.appendChild(parrafoTienda);
+    //crear boton de cliente
+    elementoEncabezado.setAttribute("id", "clienteRow");
+    elementoEncabezado.appendChild(elementoInput);
+    elementoEncabezado.appendChild(elementoLabel);
+    elementoEncabezado.appendChild(agregarCompra);
+    elementoEncabezado.appendChild(eliminarCompra);
+    elementoEncabezado.appendChild(mostrarCompra);
+    
+    //div contenedor de cada cliente
+    elementoCliente.appendChild(elementoEncabezado);
+    //contenedor de todos los clientes
+    contenedorCliente.appendChild(elementoCliente);
+    actualizarTotales();
     }
+}
+
+function validarContenido(inputNombre){
+
+    if(inputNombre === ""){
+        alert("El campo nombre es obligatorio.")
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function eliminarCliente() {
+    clientes -= 1;
+    actualizarTotales();
 }
