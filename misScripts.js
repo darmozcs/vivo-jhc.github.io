@@ -94,6 +94,7 @@ function crearCliente() {
     let totales = separador + " - Compras: " + compras + " - Total: " + total + " ";  
     elementoLabel.textContent = " Nombre: " + inputNombre +" - Cuenta: "+ inputCuenta +" - Telefono: "+ inputtelefono + totales;
     elementoLabel.setAttribute("id", inputNombre);
+    elementoLabel.setAttribute("type", "label");
     elementoInput.setAttribute("type", "checkbox");
     elementoInput.setAttribute("id", inputNombre);
 
@@ -109,6 +110,7 @@ function crearCliente() {
     elementoCliente.appendChild(elementoEncabezado);
     //contenedor de todos los clientes
     contenedorCliente.appendChild(elementoCliente);
+    limpiarInput()
     actualizarTotales();
     }
 }
@@ -124,6 +126,97 @@ function validarContenido(inputNombre){
 }
 
 function eliminarCliente() {
-    clientes -= 1;
+    let contenedorCliente = document.getElementById("itemsClientes");
+    //contendor completo
+    for(let item of contenedorCliente.children){
+        //cliente
+        for(let cliente of item.children){
+            //elementos de la cabecera del cliente
+            for(let elemt of cliente.children) {
+                if(elemt.getAttribute("type") == "checkbox" && elemt.checked){
+                    clientes -= 1;
+                    item.removeChild(cliente);
+                }
+            }
+        }
+    }
     actualizarTotales();
+}
+
+function editarCliente(){
+    let inputNombre = document.getElementById("nombre");
+    let inputCuenta = document.getElementById("cuenta");
+    let inputtelefono = document.getElementById("telefono");
+    let contenedorCliente = document.getElementById("itemsClientes");
+    let btonCrear = document.getElementById("crear");
+    let btonEliminar = document.getElementById("eliminar");
+    let btonModificar = document.getElementById("editar");
+
+    if(btonCrear.style.display == ''){
+        btonCrear.style.display = "none";
+        btonEliminar.style.display = "none";
+        btonModificar.textContent = "Guardar";
+
+    //contendor completo
+    for(let item of contenedorCliente.children){
+        //cliente
+        for(let cliente of item.children){
+            let name;
+            let cuenta;
+            let telefono;
+            let select = false;
+            //elementos de la cabecera del cliente
+            for(let elemt of cliente.children) {
+                if(elemt.getAttribute("type") == "label" && select){
+                    let list = elemt.textContent.split(' ');
+                    console.log(list);
+                    inputNombre.value = list[2];
+                    inputCuenta.value = list[5];
+                    inputtelefono.value = list[8];
+                }
+                if(elemt.getAttribute("type") == "checkbox" && elemt.checked){
+                    select = true;
+                }
+
+            }
+        }
+    }
+    } else {
+        btonCrear.style.display = '';
+        btonEliminar.style.display = '';
+        btonModificar.textContent = "Editar";
+    //contendor completo
+    for(let item of contenedorCliente.children){
+        //cliente
+        for(let cliente of item.children){
+            let name;
+            let cuenta;
+            let telefono;
+            let select = false;
+            //elementos de la cabecera del cliente
+            for(let elemt of cliente.children) {
+                if(elemt.getAttribute("type") == "label" && select){
+                    let list = elemt.textContent.split(' ');
+                    console.log(list);
+                    list[2] = inputNombre.value;
+                    list[5] = inputCuenta.value;
+                    list[8] = inputtelefono.value;
+                    elemt.textContent = list.join(" ");
+                }
+                if(elemt.getAttribute("type") == "checkbox" && elemt.checked){
+                    select = true;
+                }
+
+            }
+        }
+
+    }
+    limpiarInput()
+    }
+}
+
+function limpiarInput(){
+    document.getElementById("nombre").value = '';
+    document.getElementById("cuenta").value = '';
+    document.getElementById("telefono").value = '';
 }
