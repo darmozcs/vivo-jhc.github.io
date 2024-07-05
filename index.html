@@ -2,10 +2,15 @@
 <head>
     <title>Venta Vivo Ropathi</title>
     <link rel="stylesheet" href="misEstilos.css">
-    <script src="misScripts.js"></script>
+    <script src="main.js"></script>
+    <script src="clientes/cliente.js" ></script>
+    <script src="compras/compra.js"></script>
+    <script src="reloj/reloj.js"></script>
+    <script src="server/server.js"></script>
+    <script src="vivos/vivo.js"></script>
 </head>
 <body onload="cargarInicial()" background="#f1f1f1">
-    <div id="encabezado">
+    <div id="top">
         <div id=pizq>
             <h1 id="titulo"></h1>
             <div id="totales">
@@ -13,10 +18,6 @@
                 <h2 id="totalVentas"></h2>
                 <h2 id="totalclientes"></h2>
             </div>
-            <div id="buscar">
-                <div><h2>Buscar</h2></div>
-                <div><input></div>
-                </div>
         </div>
         <div>
 
@@ -29,6 +30,36 @@
                 <button id="finish" onclick="finalizar()">Terminar</button>
             </div>
         </div>
+    </div>
+    <div id="panelVivo">
+        <div id ="buscarVivo"> 
+            <label class="form-label">Buscar vivos por:</label>
+            <div id="byDate"> 
+                <label class="date-label">Fecha:</label>   
+                <div id="desdeDiv">    
+                    <label class="filter-label">Desde </label>
+                    <input type="date" class="from-control" id="desde"/>
+                </div>
+                <div id="hastaDiv">
+                    <label class="filter-label">Hasta </label>
+                    <input type="date" class="to-control" id="hasta"/>
+                </div>
+            </div> 
+            <div id="byAmount"> 
+                <label class="date-label">Monto:</label>   
+                <div id="desdeDiv">    
+                    <label class="filter-label">Desde </label>
+                    <input type="number" style="width: 50%;" class="from-control" id="desde"/>
+                </div>
+                <div id="hastaDiv">
+                    <label class="filter-label">Hasta </label>
+                    <input type="number" style="width: 50%;" class="to-control" id="hasta"/>
+                </div>
+            </div> 
+            <button id="start" onclick="buscarVivo()">Buscar</button>
+            <div id="panelVivos"></div>
+        </div>
+
     </div>
     <div id="panelCliente">
         <div id="formCliente">
@@ -48,7 +79,13 @@
                 </div>
             </div>
         </div>
-        <div id="itemsClientes">
+        <div id="panel">
+            <div id="buscar">
+                <div><h2>Buscar</h2></div>
+                <div><input id="buscador"></div>
+                </div>   
+            <div id="itemsClientes">
+            </div>
         </div>
     </div>
 

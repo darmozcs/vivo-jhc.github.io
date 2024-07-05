@@ -1,5 +1,5 @@
-body{
-    background-color: #fcc4c42c; 
+body {
+    background-color: #fcc4c42c;
 }
 
 #titulo {
@@ -17,30 +17,47 @@ h2 {
     font-size: 20px;
 }
 
-#itemsClientes{
+#itemsClientes {
     padding-left: 20%;
+}
+
+#itemsClientes>div {
     padding-top: 2%;
 }
 
-#botones{
+#itemsClientes>button {
+    width: 50px;
+}
+
+#botones {
     display: flex;
 }
 
-#formCliente{
+#formCliente {
     height: 100%;
     width: 160px;
     position: fixed;
     left: 0;
     padding-left: 2%;
-  }
+    padding-top: 2%;
+}
 
-#botonesCliente{
+#buscarVivo {
+    height: 100%;
+    width: 160px;
+    position: fixed;
+    left: 0;
+    padding-left: 1%;
+    padding-top: 2%;
+}
+
+#botonesCliente {
     padding-top: 10%;
     display: flex;
     flex-direction: column;
 }
 
-#encabezado{
+#top {
     background-color: #f1f1f1;
     display: flex;
     position: -webkit-sticky;
@@ -48,36 +65,38 @@ h2 {
     top: 0;
 }
 
-#pizq{
+#pizq {
     text-align: left;
     display: flex;
     flex-direction: column;
     padding-left: 5%;
 }
 
-#totales{
+#totales {
     display: flex;
 }
 
-#totales > h2 {
+#totales>h2 {
     padding-right: 15%;
     text-align: left;
     font-size: 20px;
     width: 300px;
 }
 
-#buscar{
+#buscar {
+    padding-left: 20%;
+    padding-top: 2%;
     display: flex;
     flex-direction: row;
 }
 
-#buscar > div {
-    margin: 10px;
+#buscar>div {
+    margin: 2px;
     font-size: 20px;
     align-self: center;
-  }
+}
 
-#time{
+#time {
     font-family: 'Comic Sans MS', cursive;
     color: #f81f8b;
     text-shadow: 2px 2px 4px #FF69B4;
@@ -86,7 +105,8 @@ h2 {
 }
 
 #start {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
+    /* Verde */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -100,7 +120,8 @@ h2 {
 }
 
 #stop {
-    background-color: #afa84c; /* Verde */
+    background-color: #afa84c;
+    /* Verde */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -114,7 +135,8 @@ h2 {
 }
 
 #finish {
-    background-color: #af4c4c; /* Verde */
+    background-color: #af4c4c;
+    /* Verde */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -128,7 +150,8 @@ h2 {
 }
 
 #crear {
-    background-color: #4CAF50; /* Verde */
+    background-color: #4CAF50;
+    /* Verde */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -142,7 +165,8 @@ h2 {
 }
 
 #editar {
-    background-color: #afa84c; /* Verde */
+    background-color: #afa84c;
+    /* Verde */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -156,7 +180,8 @@ h2 {
 }
 
 #eliminar {
-    background-color: #af4c4c; /* Verde */
+    background-color: #af4c4c;
+    /* Verde */
     border: none;
     color: white;
     padding: 15px 32px;
@@ -169,19 +194,77 @@ h2 {
     border-radius: 5px;
 }
 
-#clienteRow{
-    border: 1px solid gray;
-    font-size: large;
-}
-
-#btnAgregarCompra{
+#btnAgregarCompra {
     background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    margin: 4px 2px;
+    margin-left: 2%;
+    cursor: pointer;
 }
 
-#btnEliminarCompra{
+#btnEliminarCompra {
     background-color: #af4c4c;
+    color: white;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
-#btnMostrarCompra{
+#btnMostrarCompra {
     background-color: #4c66af;
+    color: white;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.filtro {
+    display: none;
+}
+
+.compra {
+    padding-top: 0.5%;
+}
+
+.cliente {
+    font-size: 20px;
+}
+
+div[id~="encabezado"] {
+    background-color: #ffcece;
+    width: 1000px;
+}
+
+#btonClient{
+    padding-left: 100%;
+}
+
+.selectStatus{
+    margin-left: 2%;
+    font-size: 15px;
+}
+
+#desdeDiv{
+    display: flex;
+    flex-direction: row;
+}
+
+#hastaDiv{
+    display: flex;
+    flex-direction: row;
+}
+
+#byDate{
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#byAmount{
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.filter-label{
+    padding-right: 5%;
 }

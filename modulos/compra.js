@@ -1,6 +1,7 @@
 export default class Compra{
-    constructor(ventas,total){
-        this.ventas = ventas;
-        this.total = total;
+    constructor(live,client, amount){
+        this.live = live;
+        this.client = client;
+        this.amount = amount;
     }
 }
