@@ -34,11 +34,13 @@ function limpiarInput(){
 }
 
 function guardarVivo(){
-    let live = new LiveEntity(date, 100, totalVentas, ventas, clientes, date);
-    let compras = construirCompras(live);
-    let vivo = new VivoDto(live, compras);
-    console.log(vivo);
-    crearVivo(vivo);
+    if(verificarEstadoCompras()) {
+        let live = new LiveEntity(date, 100, totalVentas, ventas, clientes, date);
+        let compras = construirCompras(live);
+        let vivo = new VivoDto(live, compras);
+        console.log(vivo);
+        crearVivo(vivo);
+    }
 }
 
 class LiveEntity {

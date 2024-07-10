@@ -20,16 +20,17 @@ function editarCompra(cliente, idCompra){
 
 function guardarCompra(cliente, idCompra, montoActualizado) {
     let monto = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"monto");
-    if(monto.value != ""){
-        console.log("Actulizando");
-    let nombre = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"nombre");
-    let origen = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"origen");
-    let btonGuardar = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"guardar");
-    btonGuardar.textContent = "Editar";
-    btonGuardar.setAttribute("onclick", "editarCompra("+cliente.getAttribute("id")+","+idCompra+")");
-    monto.disabled = true;
-    nombre.disabled = true;
-    origen.disabled = true;
+    if(monto.value != "") {
+        console.log("Actualizando");
+        console.log(cliente.getAttribute("id") + " " + idCompra);
+        let nombre = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"nombre");
+        let origen = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"origen");
+        let btonGuardar = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"guardar");
+        btonGuardar.textContent = "Editar";
+        btonGuardar.setAttribute("onclick", "editarCompra("+cliente.getAttribute("id")+","+idCompra+")");
+        monto.disabled = true;
+        nombre.disabled = true;
+        origen.disabled = true;
 
     if(montoActualizado == 0) {
     ventas += 1;
@@ -90,9 +91,9 @@ function eliminarCompra(cliente, idCompra) {
 function ocultarCompras(cliente){
     let clientediv = document.getElementById(cliente.getAttribute("id"));
     for(let element of clientediv.children){
-        if(element.getAttribute("class") == "compra" && element.style.display == ""){
+        if(element.getAttribute("class") == "compra" && element.style.display == "") {
             element.style.display = "none";
-        } else if(element.getAttribute("class") == "compra" && element.style.display == "none"){
+        } else if(element.getAttribute("class") == "compra" && element.style.display == "none") {
             element.style.display = "";
         }
     }
@@ -156,7 +157,6 @@ function construirCompras(live){
             if(elemt.getAttribute("id").includes("encabezado")){
                 
                 for(let cont of elemt.children){
-                    console.log(cont);
                     if(cont.getAttribute("type") == "label"){
                         list = cont.textContent.split(' ');
                     }
@@ -169,7 +169,6 @@ function construirCompras(live){
                 let monto;
                 let nombre;
                 for(let cont of elemt.children) {
-                    console.log(cont);
                     if(cont.getAttribute("id") != null && cont.getAttribute("id").includes("monto")) {
                         monto = cont.valueAsNumber;
                     }
@@ -229,4 +228,24 @@ function crearCompra(cliente, idCompra, nombre, monto, origen){
     divCompra.appendChild(btonGuardar);
     divCompra.appendChild(btonEliminar);
     cliente.appendChild(divCompra);
+}
+
+function verificarEstadoCompras() {
+    let clientediv = document.getElementById("itemsClientes");
+    for(let element of clientediv.children){
+        for(let client of element.children){
+        if(client.getAttribute("class") == "compra") {
+            for(let compra of client.children){
+            if(compra.getAttribute("id") != null && compra.getAttribute("id").includes("guardar")) {
+                console.log(compra.textContent);
+                if(compra.textContent.includes("Guardar")) {
+                 alert("Todas las compras deben ser guardadas.");
+                 return false;
+                }
+            }
+        }
+        }
+    }
+    }
+    return true;
 }
