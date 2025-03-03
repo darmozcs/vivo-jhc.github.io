@@ -36,19 +36,38 @@ function detener(){
 }
 
 function finalizar(){
+    decidirVivo();
+    clearInterval(conteoId);
+}
+
+function decidirVivo() {
     let btonStart = document.getElementById("start");
     let btonStop = document.getElementById("stop");
     let btonFinsh = document.getElementById("finish");
     btonStart.textContent = "Guardar";
-    btonStop.textContent = "Reiniciar";
-    btonFinsh.textContent = "Eliminar";
+    btonFinsh.textContent = "Descartar";
     btonStart.style.display = "";
-    btonStop.style.display = "";
+    btonStop.style.display = "none";
+    btonFinsh.style.display = "";
     btonStop.setAttribute("onclick", "comenzarReloj()");
     btonStart.setAttribute("onclick", "guardarVivo()");
     btonFinsh.setAttribute("onclick", "reiniciar()");
     document.getElementById("formCliente").style.display = "none";
-    clearInterval(conteoId);
+}
+
+function decidirFromBuscarVivo(id) {
+    let btonStart = document.getElementById("start");
+    let btonStop = document.getElementById("stop");
+    let btonFinsh = document.getElementById("finish");
+    btonStart.textContent = "Guardar";
+    btonFinsh.textContent = "Descartar";
+    btonStart.style.display = "";
+    btonStop.style.display = "none";
+    btonFinsh.style.display = "";
+    btonStop.setAttribute("onclick", "comenzarReloj()");
+    btonStart.setAttribute("onclick", "actualizarVivo(" + id +")");
+    btonFinsh.setAttribute("onclick", "reiniciar()");
+    document.getElementById("formCliente").style.display = "none";
 }
 
 function ticTac(){

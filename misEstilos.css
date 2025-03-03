@@ -17,6 +17,18 @@ h2 {
     font-size: 20px;
 }
 
+#itemsVivos {
+    padding-left: 20%;
+}
+
+#itemsVivos>div {
+    padding-top: 2%;
+}
+
+#itemsVivos>button {
+    width: 50px;
+}
+
 #itemsClientes {
     padding-left: 20%;
 }

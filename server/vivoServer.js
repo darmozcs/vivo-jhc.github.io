@@ -1,6 +1,6 @@
 async function crearVivo(vivo){
     try{
-        let respuesta = await fetch("http://localhost:8080/liveshop/fullcreate",{
+        let respuesta = await fetch("http://localhost:8081/liveshop/fullcreate",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -9,6 +9,7 @@ async function crearVivo(vivo){
         })
         if(respuesta.ok) {
             console.log("Vivo guardado con exito.");
+            alert("Vivo guardado con exito.")
         } else {
             console.error(respuesta);
         }
@@ -19,7 +20,7 @@ async function crearVivo(vivo){
 
 async function getVivo(from, to){
     try{
-        let respuesta = await fetch("http://localhost:8080/liveshop/between",{
+        let respuesta = await fetch("http://localhost:8081/liveshop/between",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -39,5 +40,25 @@ async function getVivo(from, to){
         }
     } catch(error) {
         console.error("Error al buscarVivo:", error);
+    }
+}
+
+async function enviarActualizacionVivo(vivo){
+    try{
+        let respuesta = await fetch("http://localhost:8081/liveshop",{
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(vivo)
+        })
+        if(respuesta.ok) {
+            console.log("Vivo guardado con exito.");
+            alert("Vivo guardado con exito.")
+        } else {
+            console.error(respuesta);
+        }
+    } catch(error) {
+        console.error("Error al crearVivo:", error);
     }
 }

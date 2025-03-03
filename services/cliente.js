@@ -1,8 +1,6 @@
 var estadosCompra = ["Abierta", "Cerrada", "Cancelada", "Informada", "Pagada", "Entregada"];
 
-function crearCliente() {
-    let compras = 0;
-    let total = 0;
+function crearCliente(compras, total) {
     let inputNombre = document.getElementById("nombre").value;
     let inputCuenta = document.getElementById("cuenta").value;
     let inputtelefono = document.getElementById("telefono").value;
@@ -10,14 +8,8 @@ function crearCliente() {
     //validacion de los input
     let resultado = validarContenido(inputNombre);
     if(resultado){
-    clientes += 1;
     //elementos que componen al cliente***********************************************
-    generarCliente(inputNombre, compras, total, inputCuenta, inputtelefono)
-
-    agregarCompra(elementoCliente, idCompra);
-    limpiarInput()
-    actualizarTotales();
-    window.scrollTo(0,0);
+    return generarCliente(0, inputNombre, compras, total, inputCuenta, inputtelefono, "Abierta");
     }
 }
 
@@ -140,25 +132,33 @@ document.addEventListener("keyup",e =>{
     }
 })
 
-document.addEventListener("change", e =>{
+document.addEventListener("change", e => 
+    {
     let contenedorCliente = document.getElementById("itemsClientes");
     
     for(let cliente of contenedorCliente.children){
         for(let elemt of cliente.children) {
-            if(elemt.getAttribute("id").includes("encabezado")){
-                for(let chil of elemt.children){
-                    if(e.target.matches("#" + chil.getAttribute("id"))){
+            if(elemt.getAttribute("id").includes("encabezado")) {
+                for(let chil of elemt.children) {
+                    isThis = false;
+                    if(e.target.matches("#" + chil.getAttribute("id"))) {
                         const seleccionado = e.target.value;
-                        editarSelect(seleccionado, chil);
                         if(seleccionado == "Abierta") {
                             habilitarCompras(cliente);
+                            editarSelect(seleccionado, chil);
                         } else {
-                            inhabilitarCompras(cliente);
+                            if(verificarEstadoComprasCliente(cliente)) {
+                                inhabilitarCompras(cliente);
+                                editarSelect(seleccionado, chil);
+                            } else {
+                                e.target.value = "Abierta"
+                            }
                         }
+                        actualizarEstadoCliente(getNameFormClient(cliente), e.target.value);
                     }
                 }
             }
-
+        
         }
     }
 })
@@ -197,13 +197,15 @@ function editarSelect(seleccionado, chil){
     }
 }
 
-function crearEncabezadoCliente(nombre, cuenta, telefono, cantCompras, total, estado){
+function crearEncabezadoCliente(id, nombre, cuenta, telefono, cantCompras, total, estado){
     console.log(nombre, cuenta, telefono, cantCompras, total, estado);
-    return generarCliente(nombre, cantCompras, total, cuenta, telefono, estado);
+    return generarCliente(id, nombre, cantCompras, total, cuenta, telefono, estado);
 }
 
-function generarCliente(nombre, compras, total, cuenta, telefono, estado){
-
+function generarCliente(id, nombre, compras, total, cuenta, telefono, estado) {
+    client = new Cliente(nombre, cuenta, telefono, compras, total, estado, id);
+    console.log(client);
+    idName = nombre.toString().replace(" ", "");
     let contenedorCliente = document.getElementById("itemsClientes");
     let elementoCliente = document.createElement("div");
     let elementoEncabezado = document.createElement("div");
@@ -222,24 +224,26 @@ function generarCliente(nombre, compras, total, cuenta, telefono, estado){
     btonagregarCompra.setAttribute("id", "btnAgregarCompra");
     eliminarCompra.setAttribute("id", "btnEliminarCompra");
     mostrarCompra.setAttribute("id", "btnMostrarCompra");
-    btonagregarCompra.setAttribute("onclick", "agregarCompra("+ nombre.replace(" ", "") +")");
-    mostrarCompra.setAttribute("onclick", "ocultarCompras("+ nombre.replace(" ", "") +")")
+    //btonagregarCompra.addEventListener("onclick", agregarCompra(client));
+    btonagregarCompra.setAttribute("onclick", "agregarCompra("+ idName +")");
+    mostrarCompra.setAttribute("onclick", "ocultarCompras("+ idName +")")
     //texto y checkbox del cliente
     let totales = separador + " - Compras: " + compras + " - Total: " + total + " ";  
     elementoLabel.textContent = " Nombre: " + nombre +" - Cuenta: "+ cuenta +" - Telefono: "+ telefono + totales;
-    elementoLabel.setAttribute("id", nombre.replace(" ", "") + "label");
+    elementoLabel.setAttribute("id", idName + "label");
     elementoLabel.setAttribute("class", "cliente");
     elementoLabel.setAttribute("type", "label");
     elementoInput.setAttribute("type", "checkbox");
-    elementoInput.setAttribute("id", nombre.replace(" ", "") + "check");
-    for(var i=0;i<estadosCompra.length;i++){
+    elementoInput.setAttribute("id", idName + "check");
+
+    for(var i=0 ; i < estadosCompra.length ; i++){
         statusElement.options[i] = new Option(estadosCompra[i]);
     }
 
     //crear boton de cliente
-    statusElement.setAttribute("id","selectStatus-"+  nombre.replace(" ", ""));
+    statusElement.setAttribute("id","selectStatus-"+  idName);
     statusElement.setAttribute("class","selectStatus");
-    elementoEncabezado.setAttribute("id", nombre.replace(" ", "") + " " + "encabezado");
+    elementoEncabezado.setAttribute("id", idName + " " + "encabezado");
     elementoEncabezado.appendChild(elementoInput);
     elementoEncabezado.appendChild(elementoLabel);
     elementoEncabezado.appendChild(btonagregarCompra);
@@ -249,7 +253,7 @@ function generarCliente(nombre, compras, total, cuenta, telefono, estado){
     
     //div contenedor de cada cliente
     elementoCliente.appendChild(elementoEncabezado);
-    elementoCliente.setAttribute("id", nombre.replace(" ", ""));
+    elementoCliente.setAttribute("id", idName);
 
     //contenedor de todos los clientes
     if(contenedorCliente.firstChild) {
@@ -258,10 +262,28 @@ function generarCliente(nombre, compras, total, cuenta, telefono, estado){
         contenedorCliente.appendChild(elementoCliente);
     }
 
-    if(estado != "" && estado !== null){
+    if(!!estado){
         statusElement.value = estado;
         editarSelect(estado, statusElement);
-
     }
+    
+    agregarCliente(client);
+    limpiarInput();
+    actualizarTotales();
+    window.scrollTo(0,0);
     return elementoCliente;
+}
+
+function getNameFormClient(cliente) {
+    
+    for(let element of cliente.children) {
+        if(element.getAttribute("id").includes("encabezado")) {
+            for(let elemt of element.children) { 
+                console.log(elemt); 
+                if(elemt.getAttribute("type") == "label") {
+                    return elemt.getAttribute("id").replace("label", "");
+                }
+            }
+        }
+    }
 }

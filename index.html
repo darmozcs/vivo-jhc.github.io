@@ -1,93 +1,207 @@
-<!DOCTYPE html>
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-ES" lang="es-ES">
+
 <head>
-    <title>Venta Vivo Ropathi</title>
-    <link rel="stylesheet" href="misEstilos.css">
-    <script src="main.js"></script>
-    <script src="clientes/cliente.js" ></script>
-    <script src="compras/compra.js"></script>
-    <script src="reloj/reloj.js"></script>
-    <script src="server/server.js"></script>
-    <script src="vivos/vivo.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="BOOKITIT" />
+    <meta name="keywords" content="BOOKITIT" />
+
+    <!-- Page Title-->
+    <title>.:: BOOKITIT ::.</title>
+
+    <link rel="SHORTCUT ICON" href="/images/header/shorticon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Fixed css files -->
+    <link href="/css/footer.css?v=5" rel="stylesheet" type="text/css" />
+    <link href="/css/footer.css?v=5" rel="stylesheet" type="text/css" />
+    <link href="/css/header.css?v=5" rel="stylesheet" type="text/css" />
+    <link href="/css/header.css?v=5" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css?v=5" rel="stylesheet" type="text/css" />
+    <link href="/css/style.css?v=5" rel="stylesheet" type="text/css" />
+
+    <!-- Variable js files -->
+    <script type="text/javascript">
+        sSave = "Guardar";
+            sAccept = "Aceptar";
+            sCancel = "Cancelar";
+            sDelete = "Eliminar";
+            sConfirm = "Confirmar";
+            sUnConfirm = "Rechazar";
+            sRequiredName = "Nombre necesario";
+            sCharge = "Cobrar";
+            sLang = "es";
+    </script>
+
+    <script type="text/javascript" src="/js/jquery/jquery-1.4.2.min.js?v=5"></script>
+    <script type="text/javascript" src="/js/jquery/jquery-ui-1.8.20.custom.min.js?v=5"></script>
+    <script type="text/javascript" src="/js/constants.js?v=5"></script>
+    <script type="text/javascript" src="/js/functions.js?v=5"></script>
+    <script type="text/javascript" src="/js/behaviours.js?v=5"></script>
+    <script type="text/javascript" src="/js/alerts/jquery.alerts.js?v=5"></script>
+    <link href="/js/alerts/jquery.alerts.css?v=5" rel="stylesheet" type="text/css" media="screen" />
 </head>
-<body onload="cargarInicial()" background="#f1f1f1">
-    <div id="top">
-        <div id=pizq>
-            <h1 id="titulo"></h1>
-            <div id="totales">
-                <h2 id="ventas"></h2>
-                <h2 id="totalVentas"></h2>
-                <h2 id="totalclientes"></h2>
-            </div>
-        </div>
-        <div>
 
-        </div>
-        <div id="cronometro">
-            <div id = "time"><h1 id="reloj">00:00:00</h1></div>
-            <div id ="botones">
-                <button id="start" onclick="comenzarReloj()">Comenzar</button>
-                <button id="stop" onclick="detener()">Detener</button>
-                <button id="finish" onclick="finalizar()">Terminar</button>
+<body class="cP">
+    <div id="idRecipient">
+        <div id="idHeader">
+            <div id="idMenuLeft" class="clsHP"></div>
+
+            <div id="idMenuRight" class="clsHPR">
+                <div id="idLang" class="clsHP">
+
+                    <div id="idLanguage" class="clsTextWhite">
+                        <a href="#">
+                            Español <small>▼</small>
+                        </a>
+
+                        <div id="idListLanguages" class="clsMenuCombo">
+                            <ul>
+                                <li>
+                                    <a class="" style="color: #505050;"
+                                        href="/UmdSaVknXDNaQlQ4VGUIYlVuXCFROVo8VDcEKVZ1Dm5dSwM1DD8APA4-UTYGMwMiXDJbFQgkCDsBQQM4AXVUdFJtUnVZJ1wzWkJUMVR2CH5VZlwm"
+                                        target="_self">
+                                        Inglés </a>
+                                </li>
+                                <li>
+                                    <a class="" style="color: #505050;"
+                                        href="/V2IFIwB-XDMLEwNvUmNSOAQ_CXQIYF07XT5VeFFyBGQAFgE3WWoGOgk5B2BVYAEgUjwATlN_WGtTE1BrUSVVdVdoBSIAflwzCxMDZlJwUiQENwlz"
+                                        target="_self">
+                                        Español </a>
+                                </li>
+                                <li>
+                                    <a class="" style="color: #505050;"
+                                        href="/ACAHJlwiVjkLEwFtVWQAalBrXiMJYQ9pAWJTflV2BGRRR1BmXW4GOgs7UTZVYAYnUT8IRgIuXG9REV9kVSEEJAA_ByBcIlY5CxMBZFV3AHZQY14k"
+                                        target="_self">
+                                        Portugués </a>
+                                </li>
+                                <li>
+                                    <a class="" style="color: #505050;"
+                                        href="/V2RSZgB-Am0BGVE9U2IHbVZtXiMHbw1rXD9RfAUmB2cAFgcxCzhTbw8_VDNRZAEgUD4IRlN_X2xcHFZtUCRWdldoUnUAfgJtARlRNFNxB3FWZV4k"
+                                        target="_self">
+                                        Catalán </a>
+                                </li>
+                                <li>
+                                    <a class="" style="color: #505050;"
+                                        href="/BzJQcFknVDtaQlQ4UmMEbl1mXCFUPApsVDdWewAjDm5SRAk_W2gGOl1tBWJSZwgpVzkOQAYqCzgERAA7AHQFJQc4UHdZJ1Q7WkJUMVJwBHJdblwm"
+                                        target="_self">
+                                        Euskera </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="clsCB"></div>
+        </div>
+        <script>
+            $(document).ready(function (){
+       $("#idHeaderProfessionalClose, #idHeaderMulticenterClose").click(function(){
+          localStorage.clear();
+          
+          var iframe = document.getElementById('idXssIframeLogout');
+          iframe.src = 'https://webapp.bookitit.com/logout';
+       });
+    });
+        </script>
+
+        <iframe hidden id="idXssIframeLogout" src="" style="display: none;"></iframe>
+
+        <div id="idContent">
+
+            <div id="idDivError" class="clsPage">
+                <div id="zoneMain" class="clsContentPage clsBorderRBottom">
+                    <div id="zoneContent">
+                        <div class="clsBevelBottom clsMessageError">
+                            <b>
+                    <label>
+                        Mensaje de Error :
+                    </label>
+                    <label class="clsColorRed">
+                        -121                    </label>
+                </b>
+                        </div>
+                        <div class="clsBevelBottom clsBevelTop clsMessageError">
+                            <b>
+                    <label>
+                        CÓDIGO de Error :
+                    </label>
+                    <label class="clsColorRed">
+                        -1
+                    </label>
+                </b>
+                        </div>
+                        <div class="clsBevelTop clsMessageError">
+                            <b>
+                    <label>
+                        Descripción del Error :
+                    </label>
+                </b>
+                            <br/><br/>
+                            <div>
+                                Contacte con el soporte técnico.
+                            </div>
+
+
+                            <br/>
+                            <div>
+                                <a href="javascript:history.back()">Clic aquí para continuar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="clsCB"></div>
+    <div id="footer" style="margin: 0">
+        <div id="idBar"></div>
+
+        <div id="idFooterContent" class="clsTextGrey clsBgClear">
+
+            <!-- Google Tag Manager PONER EN EL HEAD-->
+            <script>
+                (function(w,d,s,l,i){
+            w[l]=w[l]||[];
+            w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+            var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+            j.async=true;
+            j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+            f.parentNode.insertBefore(j,f); 
+        })(window,document,'script','dataLayer', 'GTM-PMCBBML');
+            </script>
+            <!-- End Google Tag Manager -->
+
+            <!-- Google Tag Manager (noscript) PONER EN EL BODY-->
+            <noscript>
+                <iframe src='https://www.googletagmanager.com/ns.html?id=GTM-PMCBBML' height='0' width='0'
+                    style='display:none;visibility:hidden'></iframe>
+            </noscript>
+            <!-- End Google Tag Manager (noscript) -->
+
+            <div id="idSubMenuFL">
+                <div class="clsHP">
+                    <a href="/XWhTdQxyUD9eRglkUGUAdwAvWzIAbl05VSBULwI2VkJWdQcnWXJQfQAxUiABJVEwBjcMZVQ0Wjc"
+                        title="Soporte" target="_self">
+                        Soporte </a>
+                </div>
+            </div>
+
+            <div id="idSubMenuFR">
+                <a href="http://www.bookitit.com" target="_blank">
+                    <div id="idNubesisLogo" class="clsHP"></div>
+                </a>
+
+                <div id="idDivPowered">
+                    powered by <a href="http://www.bookitit.com">bookitit</a>
+                </div>
+            </div>
+            <div class="clsCB"></div>
         </div>
     </div>
-    <div id="panelVivo">
-        <div id ="buscarVivo"> 
-            <label class="form-label">Buscar vivos por:</label>
-            <div id="byDate"> 
-                <label class="date-label">Fecha:</label>   
-                <div id="desdeDiv">    
-                    <label class="filter-label">Desde </label>
-                    <input type="date" class="from-control" id="desde"/>
-                </div>
-                <div id="hastaDiv">
-                    <label class="filter-label">Hasta </label>
-                    <input type="date" class="to-control" id="hasta"/>
-                </div>
-            </div> 
-            <div id="byAmount"> 
-                <label class="date-label">Monto:</label>   
-                <div id="desdeDiv">    
-                    <label class="filter-label">Desde </label>
-                    <input type="number" style="width: 50%;" class="from-control" id="desde"/>
-                </div>
-                <div id="hastaDiv">
-                    <label class="filter-label">Hasta </label>
-                    <input type="number" style="width: 50%;" class="to-control" id="hasta"/>
-                </div>
-            </div> 
-            <button id="start" onclick="buscarVivo()">Buscar</button>
-            <div id="panelVivos"></div>
-        </div>
-
-    </div>
-    <div id="panelCliente">
-        <div id="formCliente">
-            <div id="fields">
-                <div><h2>Nombre</h2></div>
-                <div><input id="nombre" type="text"></div>
-                <div><h2>Cuenta</h2></div>
-                <div><input id="cuenta" type="text"></div>
-                <div><h2>Telefono</h2></div>
-                <div><input id="telefono" type="text"></div>
-            </div>
-            <div id="buscar_botones">
-                <div id ="botonesCliente">
-                    <button id="crear" onclick="crearCliente()">Agregar</button>
-                    <button id="editar" onclick="editarCliente()">Editar</button>
-                    <button id="eliminar" onclick="eliminarCliente()">Eliminar</button>
-                </div>
-            </div>
-        </div>
-        <div id="panel">
-            <div id="buscar">
-                <div><h2>Buscar</h2></div>
-                <div><input id="buscador"></div>
-                </div>   
-            <div id="itemsClientes">
-            </div>
-        </div>
-    </div>
-
 </body>
+
 </html>

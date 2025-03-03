@@ -1,5 +1,6 @@
+let idCompra = 1;
 
-function agregarCompra(cliente, idCompra){
+function agregarCompra(cliente){
     mostrarCompras(cliente);
     crearCompra(cliente, idCompra);
     idCompra += 1;
@@ -19,7 +20,10 @@ function editarCompra(cliente, idCompra){
 }
 
 function guardarCompra(cliente, idCompra, montoActualizado) {
+    let compras;
+    let total;
     let monto = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"monto");
+    
     if(monto.value != "") {
         console.log("Actualizando");
         console.log(cliente.getAttribute("id") + " " + idCompra);
@@ -36,7 +40,7 @@ function guardarCompra(cliente, idCompra, montoActualizado) {
     ventas += 1;
     }
     totalVentas += monto.valueAsNumber - montoActualizado;
-
+    console.log(totalVentas);
     for(let elemt of cliente.children) {
         console.log(elemt);
         if(elemt.getAttribute("id") == cliente.getAttribute("id") + " encabezado") {
@@ -44,37 +48,46 @@ function guardarCompra(cliente, idCompra, montoActualizado) {
                 if(chil.getAttribute("type") == "label" && montoActualizado == 0) {
                     let list = chil.textContent.split(' ');
                     list[28] = Number(list[28]) + 1;
+                    compras = list[28];
                     chil.textContent = list.join(" ");
                 }
                 if(chil.getAttribute("type") == "label") {
                     let list = chil.textContent.split(' ');
                     list[31] = Number(list[31]) + monto.valueAsNumber - montoActualizado;
+                    total = list[31];
                     chil.textContent = list.join(" ");
                 }
             }
         }
     }
+
+    actualizarTotalesCliente(cliente.getAttribute("id"),compras, total);
     actualizarTotales();
+    agregarCompraCliente(cliente.getAttribute("id"), idCompra, nombre.value, monto.valueAsNumber, origen.value);
     } else {
         alert("No se puede agregar un compra sin monto.");
     }
 }
 
 function eliminarCompra(cliente, idCompra) {
+    let clientdiv = document.getElementById(cliente.getAttribute("id"));
+    console.log(cliente.getAttribute("id"));
+
     let compra = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra);
     let monto = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"monto");
     let btonGuardar = document.getElementById(cliente.getAttribute("id") +"-"+ idCompra +"-"+"guardar");
     if(btonGuardar.textContent == "Editar") {
     ventas -= 1;
     totalVentas -= monto.valueAsNumber;
-    for(let elemt of cliente.children) {
-        if(elemt.getAttribute("id") == cliente.getAttribute("id") + "encabezado"){
+    for(let elemt of clientdiv.children) {
+        if(elemt.getAttribute("id") == cliente.getAttribute("id") + " " + "encabezado") {
             for(let chil of elemt.children){
                 if(chil.getAttribute("type") == "label") {
                     let list = chil.textContent.split(' ');
                     list[28] = Number(list[28]) - 1;
                     chil.textContent = list.join(" ");
                 }
+
                 if(chil.getAttribute("type") == "label") {
                     let list = chil.textContent.split(' ');
                     list[31] = Number(list[31]) - monto.valueAsNumber;
@@ -84,7 +97,8 @@ function eliminarCompra(cliente, idCompra) {
         }
     }
     actualizarTotales();
-}
+    }
+    eliminarCompraCliente(idCompra);
     cliente.removeChild(compra);
 }
 
@@ -145,47 +159,8 @@ function habilitarCompras(cliente){
     }
 }
 
-function construirCompras(live){
-    console.log(live);
-    let list;
-    let status;
-    let client;
-    let listaCompras = [];
-    let contenedorCliente = document.getElementById("itemsClientes");
-    for(let cliente of contenedorCliente.children) {
-        for(let elemt of cliente.children) {
-            if(elemt.getAttribute("id").includes("encabezado")){
-                
-                for(let cont of elemt.children){
-                    if(cont.getAttribute("type") == "label"){
-                        list = cont.textContent.split(' ');
-                    }
-                    if(cont.getAttribute("class") == "selectStatus"){
-                        status = cont.value;
-                    }
-                }
-                client = new Cliente(list[2], list[5], list[8], list[28], list[31], status);
-            } else {
-                let monto;
-                let nombre;
-                for(let cont of elemt.children) {
-                    if(cont.getAttribute("id") != null && cont.getAttribute("id").includes("monto")) {
-                        monto = cont.valueAsNumber;
-                    }
-                    if(cont.getAttribute("id") != null && cont.getAttribute("id").includes("nombre")) {
-                        nombre = cont.value;
-                    }
-                }
-                listaCompras.push(new Compra(client,monto, nombre));
-            }
-        
-        }
-    }
-    return listaCompras;
-}
-
-function crearCompra(cliente, idCompra, nombre, monto, origen){
-
+function crearCompra(cliente, idCompra, nombre, monto, origen) {
+    
     let atrbIdCompra = cliente.getAttribute("id") + "-" + idCompra;
     let divCompra = document.createElement("div");
     let labelNombre = document.createElement("label");
@@ -196,11 +171,11 @@ function crearCompra(cliente, idCompra, nombre, monto, origen){
     let inputOrigen = document.createElement("input");
     let btonGuardar = document.createElement("button");
     let btonEliminar = document.createElement("button");
-
+    console.log(atrbIdCompra);
     divCompra.setAttribute("id", atrbIdCompra);
     divCompra.setAttribute("class", "compra");
     labelNombre.textContent = " Código: ";
-    labelMonto.textContent = " Monto: ";
+    labelMonto.textContent = " Monto: "; 
     btonGuardar.textContent = " Guardar";
     labelOrigen.textContent = " Dueño: ";
     btonGuardar.setAttribute("onclick", "guardarCompra("+cliente.getAttribute("id")+","+idCompra+","+ 0 +")");
@@ -230,10 +205,16 @@ function crearCompra(cliente, idCompra, nombre, monto, origen){
     cliente.appendChild(divCompra);
 }
 
-function verificarEstadoCompras() {
+function verificarEstadoComprasTodosClientes() {
     let clientediv = document.getElementById("itemsClientes");
     for(let element of clientediv.children){
-        for(let client of element.children){
+        verificarEstadoComprasCliente(element)
+    }
+    return true;
+}
+
+function verificarEstadoComprasCliente(element) {
+    for(let client of element.children){
         if(client.getAttribute("class") == "compra") {
             for(let compra of client.children){
             if(compra.getAttribute("id") != null && compra.getAttribute("id").includes("guardar")) {
@@ -246,6 +227,6 @@ function verificarEstadoCompras() {
         }
         }
     }
-    }
+
     return true;
 }

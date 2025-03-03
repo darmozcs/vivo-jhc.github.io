@@ -3,7 +3,6 @@ let conteoId;
 let clientes = 0;
 let ventas = 0;
 let totalVentas = 0;
-let idCompra = 1;
 let buyList = [];
 
 let separador = "                 ";
@@ -12,13 +11,19 @@ let hr = 0;
 let seg = 0;
 let min = 0;
 
+let clientList = [];
+let compraList = [];
+
 function cargarInicial(){
     document.getElementById("panel").style.display = "none";
     document.getElementById("formCliente").style.display = "none";
+    document.getElementById("itemsClientes").style.display = "none";
     document.getElementById("stop").style.display = "none";
     document.getElementById("finish").style.display = "none";
     document.getElementById("titulo").textContent = textTitulo + date;
     actualizarTotales();
+    clientList = [];
+    compraList = [];
 }
 
 function actualizarTotales(){
@@ -34,55 +39,24 @@ function limpiarInput(){
 }
 
 function guardarVivo(){
-    if(verificarEstadoCompras()) {
+    if(verificarEstadoComprasTodosClientes()) {
+        console.log(compraList);
+        
         let live = new LiveEntity(date, 100, totalVentas, ventas, clientes, date);
-        let compras = construirCompras(live);
-        let vivo = new VivoDto(live, compras);
+        let vivo = new VivoDto(live, compraList);
         console.log(vivo);
         crearVivo(vivo);
     }
 }
 
-class LiveEntity {
-    constructor(liveDate, duration, totalAmount, totalBuy, totalClient, limitPayDate){
-        this.liveDate = liveDate;
-        this.duration = duration;
-        this.totalAmount = totalAmount;
-        this.totalBuy = totalBuy;
-        this.totalClient = totalClient;
-        this.limitPayDate = limitPayDate;
+function actualizarVivo(id) {
+    if(verificarEstadoComprasTodosClientes()) {
+        console.log(id)  
+        let live = new LiveEntity(date, 100, totalVentas, ventas, clientes, date, id);
+        let vivo = new VivoDto(live, compraList);
+        console.log(vivo);
+        enviarActualizacionVivo(vivo);
     }
-
-}
-
-class Cliente {
-
-    constructor(name, account, phoneNumber, compras, total, status){
-        this.name = name;
-        this.account = account;
-        this.phoneNumber = phoneNumber;
-        this.compras = compras;
-        this.total = total;
-        this.status = status;
-    }
-
-}
-
-class Compra{
-    constructor(client, amount, codigo){
-        this.client = client;
-        this.amount = amount;
-        this.codigo = codigo;
-    }
-}
-
-class VivoDto {
-
-    constructor(live, buyList){
-        this.live = live;
-        this.buyList = buyList;
-    }
-
 }
 
 function reiniciar(){
@@ -101,4 +75,58 @@ function crearDate(){
 
     const formattedToday = dd + '/' + mm + '/' + yyyy;
     return formattedToday;
+}
+
+function buildClient() {
+    crearCliente(0,0)
+}
+
+function agregarCliente(client) {
+    clientes += 1;
+    clientList.push(client);
+    
+}
+
+function agregarCompraCliente(nombre, idCompra, codigo, monto, origen) {
+    compraList = compraList.filter(item => item.idCompra !== idCompra);
+    
+    for(client of clientList) {
+        if(client.name == nombre) {
+            console.log(client);
+            compraList.push(new Compra(client,monto, codigo, idCompra));
+        }
+    }
+}
+
+function eliminarCompraCliente(idCompra) {
+    compraList = compraList.filter(item => item.idCompra !== idCompra);
+}
+
+function actualizarEstadoCliente(nombre, estado) {
+    console.log(nombre);
+    
+    clientList.forEach(cliente =>{
+        if(cliente.name === nombre){
+            cliente.status = estado;
+        }
+    })
+
+    compraList.forEach(element => {
+        if(element.client.name === nombre){
+            element.client.status = estado;
+        }
+    });
+
+    console.log(clientList);
+    console.log(compraList);
+}
+
+function actualizarTotalesCliente(nombre, compras, total) {
+    console.log(nombre+" "+ compras +" "+ total);
+    for(client of clientList) {
+        if(client.name == nombre) {
+            client.compras = compras;
+            client.total = total;
+        } 
+    }
 }
